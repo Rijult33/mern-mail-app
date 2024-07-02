@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+body {
+  @apply bg-background text-textPrimary;
+}
+
+.navbar, .sidebar, .email-list-header {
+  @apply bg-surface shadow-md;
+}
+
+.email-list-header {
+  @apply flex items-center justify-between p-4 border-b border-gray-200;
+}
+
+.email-item {
+  @apply flex items-center justify-between border-b border-gray-200 p-4 text-sm transition-all duration-200 hover:bg-gray-100 cursor-pointer;
+}
+
+.checkbox {
+  @apply mr-4;
+}
+
+.button {
+  @apply px-3 py-1 rounded-md transition-all duration-200;
+}
+
+.button:hover {
+  @apply bg-opacity-80;
+}
+
+.button-primary {
+  @apply bg-primary text-white;
+}
+
+.button-secondary {
+  @apply bg-secondary text-white;
+}
+
+.button-error {
+  @apply bg-error text-white;
+}
