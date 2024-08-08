@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 import Sidebar from './Sidebar';
 import { fetchReceivedEmails, fetchSentEmails, fetchDeletedEmails, fetchAllEmails } from '../redux/actions';
@@ -12,7 +12,6 @@ import NavBarLogoutPrompt from './NavBarLogoutPrompt';
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const user = useSelector((state) => state.app.user);
   const receivedEmails = useSelector((state) => state.app.receivedEmails || []);
   const sentEmails = useSelector((state) => state.app.sentEmails || []);
@@ -66,10 +65,12 @@ const Body = () => {
     );
   };
 
+  // Updated filtering logic to handle different views
   const filteredMails = (view === 'inbox' ? receivedEmails : view === 'sent' ? sentEmails : view === 'deleted' ? deletedEmails : allEmails).filter(mail =>
-    mail.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    mail.message.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    mail.senderEmail.toLowerCase().includes(searchQuery.toLowerCase())
+    mail.subject?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    mail.message?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    mail.senderEmail?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    mail.receiverEmail?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -96,7 +97,8 @@ const Body = () => {
               handleSelectAllChange,
               user,
               filteredMails,
-              dispatch
+              searchQuery,
+              dispatch,
             }}
           />
         </div>

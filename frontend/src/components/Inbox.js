@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import EmailList from './EmailList';
 import { fetchReceivedEmails, moveToBin } from '../redux/actions';
 import { useOutletContext } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+
 const Inbox = () => {
   const dispatch = useDispatch();
   const emails = useSelector((state) => state.app.receivedEmails || []);
-  const { selectedEmails, setSelectedEmails, handleCheckboxChange, handleSelectAllChange, user, view, setView } = useOutletContext();
+  const { selectedEmails, setSelectedEmails, handleCheckboxChange, handleSelectAllChange, user, view, setView, filteredMails } = useOutletContext();
 
   useEffect(() => {
     setView('inbox');
@@ -21,7 +22,7 @@ const Inbox = () => {
 
   const handleRefresh = () => {
     dispatch(fetchReceivedEmails());
-    toast.success("Refreshed")
+    toast.success("Refreshed");
   };
 
   return (
@@ -30,7 +31,7 @@ const Inbox = () => {
         <h1 className="text-2xl font-bold mb-3 mt-6 ml-10">Inbox</h1>
       </div>
       <EmailList
-        mails={emails}
+        mails={filteredMails}
         selectedEmails={selectedEmails}
         setSelectedEmails={setSelectedEmails}
         handleCheckboxChange={handleCheckboxChange}

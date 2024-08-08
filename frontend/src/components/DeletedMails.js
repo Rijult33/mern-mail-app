@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import EmailList from './EmailList';
 import { fetchDeletedEmails, recoverEmails, permanentlyDelete } from '../redux/actions';
 import { useOutletContext } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const DeletedMails = () => {
   const dispatch = useDispatch();
   const emails = useSelector((state) => state.app.deletedEmails || []);
-  const { selectedEmails, setSelectedEmails, handleCheckboxChange, handleSelectAllChange, user, view, setView } = useOutletContext();
-
+  const { selectedEmails, setSelectedEmails, handleCheckboxChange, handleSelectAllChange, user, view, setView, searchQuery } = useOutletContext();
 
   useEffect(() => {
     setView('deleted');
@@ -35,8 +34,14 @@ const DeletedMails = () => {
 
   const handleRefresh = () => {
     dispatch(fetchDeletedEmails());
-    toast.success("Refreshed")
+    toast.success("Refreshed");
   };
+
+  const filteredMails = emails.filter(mail =>
+    mail.subject?.toLowerCase().includes(searchQuery?.toLowerCase() || '') ||
+    mail.message?.toLowerCase().includes(searchQuery?.toLowerCase() || '') ||
+    mail.senderEmail?.toLowerCase().includes(searchQuery?.toLowerCase() || '')
+  );
 
   return (
     <div className="flex-1 flex flex-col">
@@ -44,7 +49,7 @@ const DeletedMails = () => {
         <h1 className="text-2xl font-bold mb-3 mt-6 ml-10">Deleted Mails</h1>
       </div>
       <EmailList
-        mails={emails}
+        mails={filteredMails}
         selectedEmails={selectedEmails}
         setSelectedEmails={setSelectedEmails}
         handleCheckboxChange={handleCheckboxChange}
