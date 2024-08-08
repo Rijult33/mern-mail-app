@@ -61,7 +61,6 @@ export const login = async (req, res) => {
       expiresIn: '1d'
     });
 
-    // Set cookie with token and send user data in response
     return res.status(200)
       .cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'strict' })
       .json({ message: `${user.fullName} logged in successfully`, user, success: true });
@@ -70,6 +69,9 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
+
+
+
 
 export const logout = async (req, res) => {
   try {

@@ -116,31 +116,32 @@ export const getAllEmailById = async (req, res) => {
     }
 };
 
-// Get all received emails for the user
+
 export const getReceivedEmails = async (req, res) => {
-    try {
-        const userId = req.id;
-        const emails = await Email.find({ to: userId, deletedBy: { $ne: userId }, permanentlyDeletedBy: { $ne: userId } })
-        .populate('userId', 'email')
-        .populate('to', 'email');
+  try {
+    const userId = req.id;
+    const emails = await Email.find({ to: userId, deletedBy: { $ne: userId }, permanentlyDeletedBy: { $ne: userId } })
+      .populate('userId', 'email')
+      .populate('to', 'email');
 
-            const emailsWithSender = emails.map(email => ({
-                _id: email._id,
-                to: email.to.email,
-                subject: email.subject,
-                message: email.message,
-                senderId: email.userId._id,
-                senderEmail: email.userId.email,
-                createdAt: email.createdAt,
-                updatedAt: email.updatedAt
-            }));
+    const emailsWithSender = emails.map(email => ({
+      _id: email._id,
+      to: email.to.email,
+      subject: email.subject,
+      message: email.message,
+      senderId: email.userId._id,
+      senderEmail: email.userId.email,
+      createdAt: email.createdAt,
+      updatedAt: email.updatedAt
+    }));
 
-        return res.status(200).json({ emails: emailsWithSender });
-    } catch (error) {
-        console.error("Error in getReceivedEmails controller:", error);
-        return res.status(500).json({ message: "Internal Server Error", success: false });
-    }
+    return res.status(200).json({ success: true, emails: emailsWithSender });
+  } catch (error) {
+    console.error("Error in getReceivedEmails controller:", error);
+    return res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
 };
+
 
 export const recoverEmail = async (req, res) => {
     try {
@@ -156,8 +157,6 @@ export const recoverEmail = async (req, res) => {
         if (!email) {
             return res.status(404).json({ message: "Email not found", success: false });
         }
-
-        // Check if the email has been soft deleted by this user
         if (email.deletedBy.includes(userId)) {
             email.deletedBy = email.deletedBy.filter(id => id.toString() !== userId);
             await email.save();
@@ -190,7 +189,7 @@ export const markAsViewed = async (req, res) => {
   };
 
 
-// Get emails in bin
+
 export const getEmailsInBin = async (req, res) => {
     try {
         const userId = req.id;

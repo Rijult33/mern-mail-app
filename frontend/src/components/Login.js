@@ -29,51 +29,42 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(formData);
-
+  
     try {
-      const res = await axios.post("http://localhost:8090/api/v1/user/login", formData, {
+      const loginRes = await axios.post("http://localhost:8090/api/v1/user/login", formData, {
         headers: {
           "Content-Type": "application/json"
         },
         withCredentials: true
       });
-
-      console.log('Server response:', res.data);
-
-      if (res.data.success) {
+  
+      console.log('Login response:', loginRes.data);
+  
+      if (loginRes.data.success) {
         setFormData({
           email: '',
           password: '',
         });
-
-        dispatch(setAuthUser(res.data.user));
-       
+  
+        dispatch(setAuthUser(loginRes.data.user));
         toast.success("Login successful!");
-        navigate('/'); // Display success message
-
-        // Fetch received emails
-        const emailsRes = await axios.get("http://localhost:8090/api/v1/user/get-received-emails", {
-          headers: {
-            "Content-Type": "application/json"
-          },
-          withCredentials: true
-        });
-
-        if (emailsRes.data) {
-          dispatch(setReceivedEmails(emailsRes.data.emails));
-        } else {
-          toast.error('Failed to fetch received emails.');
-        }
-
+        navigate('/');
+  
+        // Fetch received emails after successful login
+        
+  
       } else {
-        toast.error(res.data.message); // Display server-side error message
+        toast.error(loginRes.data.message); 
       }
-      
+  
     } catch (error) {
-      console.error('Error during login:', error);
-     // Display unexpected error message
+      console.error('Error during login:', error.response ? error.response.data : error);
+      toast.error("Invalid credentials");
     }
   };
+  
+  
+  
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -90,7 +81,7 @@ const Login = () => {
   useEffect(() => {
     if (isDemoLogin) {
       const syntheticEvent = {
-        preventDefault: () => {}, // Mocked preventDefault function
+        preventDefault: () => {},
       };
       handleSubmit(syntheticEvent);
       setIsDemoLogin(false);
@@ -106,7 +97,7 @@ const Login = () => {
         <div className="flex items-center justify-center gap-3 mb-4">
           <img
             className="w-10"
-            src="https://files.oaiusercontent.com/file-8SnBQ4Oyjs13pn94nla7djHi?se=2024-06-21T16%3A36%3A40Z&sp=r&sv=2023-11-03&sr=b&rscc=max-age%3D299%2C%20immutable&rscd=attachment%3B%20filename%3DDALL%25C2%25B7E%25202024-06-21%252022.01.10%2520-%2520A%2520minimalist%2520logo%2520featuring%2520only%2520the%2520inner%2520%2527M%2527%2520of%2520the%2520Gmail%2520logo%2520but%2520in%2520blue-600%2520from%2520Tailwind%2520CSS.%2520The%2520design%2520should%2520be%2520simple%252C%2520clean%252C%2520profession.webp&sig=lUyY8xv/AuzYMw/KXT0fvGWIzEso3xxykgiudh768R0%3D"
+            src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg"
             alt="logo"
           />
           <h1 className="text-4xl text-blue-500 font-medium">Mail</h1>
