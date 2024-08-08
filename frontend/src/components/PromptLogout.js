@@ -6,7 +6,7 @@ import { logoutUser } from '../redux/appSlice';
 const PromptLogout = ({ targetElement }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.app.user);
-  const location = useLocation();
+
   const navigate = useNavigate();
 
   const handleLogout = () => {

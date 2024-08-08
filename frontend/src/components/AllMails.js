@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 const AllMails = () => {
   const dispatch = useDispatch();
-  const emails = useSelector((state) => state.app.allEmails || []);
+
   const { selectedEmails, setSelectedEmails, handleCheckboxChange, handleSelectAllChange, user, view, setView, filteredMails } = useOutletContext();
 
   useEffect(() => {

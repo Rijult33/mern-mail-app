@@ -12,7 +12,7 @@ import { LuMailSearch } from "react-icons/lu";
 import { TbMailSearch } from "react-icons/tb";
 import { FaPencil } from "react-icons/fa6";
 
-const Sidebar = ({ view, setView, selectedEmails, setSelectedEmails, toggleComposeVisible }) => {
+const Sidebar = ({ view, setView, toggleComposeVisible }) => {
   const navigate = useNavigate();
 
   const handleViewChange = (newView) => {
