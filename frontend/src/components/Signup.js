@@ -33,7 +33,7 @@ const Signup = () => {
       console.log('Submitting form data:', formData);
 
       try {
-        const res = await axios.post("http://localhost:8090/api/v1/user/register", formData, {
+        const res = await axios.post("https://mailapp-qd44.onrender.com/api/v1/user/register", formData, {
           headers: {
             "Content-Type": "application/json"
           },

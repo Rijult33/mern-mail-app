@@ -20,7 +20,7 @@ const ComposeEmail = ({ setComposeVisible, composeVisible, view, dispatch, fetch
 
   const handleComposeSend = async () => {
     try {
-      const response = await axios.post('http://localhost:8090/api/v1/email/create', composeData, { withCredentials: true });
+      const response = await axios.post('https://mailapp-qd44.onrender.com/api/v1/email/create', composeData, { withCredentials: true });
       if (response.data.success) {
         toast.success("Email sent successfully.");
         setComposeVisible(false);

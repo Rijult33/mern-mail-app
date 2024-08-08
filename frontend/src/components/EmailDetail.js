@@ -24,7 +24,7 @@ const EmailDetail = () => {
   useEffect(() => {
     const fetchMail = async () => {
       try {
-        const response = await axios.get(`http://localhost:8090/api/v1/email/${id}`, { withCredentials: true });
+        const response = await axios.get(`https://mailapp-qd44.onrender.com/api/v1/email/${id}`, { withCredentials: true });
         setMail(response.data.email);
         setLoading(false);
       } catch (error) {

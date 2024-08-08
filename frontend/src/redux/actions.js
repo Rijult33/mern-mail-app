@@ -2,7 +2,7 @@ import axios from 'axios';
 import { setReceivedEmails, setSentEmails, setDeletedEmails, setAllEmails } from './appSlice';
 import toast from 'react-hot-toast';
 
-const API_URL = 'http://localhost:8090/api/v1/email';
+const API_URL = 'https://mailapp-qd44.onrender.com/api/v1/email';
 
 export const fetchReceivedEmails = () => async (dispatch) => {
   try {
