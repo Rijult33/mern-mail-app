@@ -50,7 +50,7 @@ const Login = () => {
         toast.success("Login successful!");
         navigate('/');
   
-        // Fetch received emails after successful login
+
         
   
       } else {
@@ -62,10 +62,6 @@ const Login = () => {
       toast.error("Invalid credentials");
     }
   };
-  
-  
-  
-
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };

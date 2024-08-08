@@ -18,8 +18,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: ['http://localhost:8090', 'http://localhost:5173' , 'http://localhost:3000','http://192.168.193.160:8082'], // Add your frontend URL here
-    credentials: true, // If you need to send cookies or HTTP authentication
+    origin: ['http://localhost:8090', 'http://localhost:5173' , 'http://localhost:3000','http://192.168.193.160:8082'],
+    credentials: true, 
   };
 
 app.use(cors(corsOptions));
@@ -29,6 +29,9 @@ app.use("/api/v1/email", emailRoute);
 
 app.get('/home', (req, res) => {
   res.json({ msg: "this is the get request" });
+});
+app.get('/test', (req, res) => {
+  res.send('<html><body><h1>Backend is working!</h1></body></html>');
 });
 
 app.listen(PORT, () => {
