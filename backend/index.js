@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: ['http://localhost:8090', 'http://localhost:5173' , 'http://localhost:3000','http://192.168.193.160:8082'],
+    origin: ['http://localhost:8090', 'http://localhost:5173' , 'http://localhost:3000','http://192.168.193.160:8082','https://mailapp-qd44.onrender.com'],
     credentials: true, 
   };
 
