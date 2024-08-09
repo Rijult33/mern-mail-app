@@ -18,7 +18,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: '*', // Allow all origins temporarily for testing
+  origin: 'https://mern-mail-lligru8r5-rijult33s-projects.vercel.app',
+  credentials: true,  // Allow credentials
+  optionsSuccessStatus: 200,
 };
 
 
