@@ -49,10 +49,6 @@ const Login = () => {
         dispatch(setAuthUser(loginRes.data.user));
         toast.success("Login successful!");
         navigate('/');
-  
-
-        
-  
       } else {
         toast.error(loginRes.data.message); 
       }
