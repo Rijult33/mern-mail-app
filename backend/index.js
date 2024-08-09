@@ -17,12 +17,14 @@ connectDB();
 // CORS configuration to allow all origins
 const corsOptions = {
   origin: '*', // Allow all origins
-  credentials: true, // Allow cookies and credentials
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  credentials: true, // Allow credentials (cookies)
   optionsSuccessStatus: 200,
 };
 
 // Use CORS middleware
-
+app.use(cors(corsOptions));
 
 // Middleware setup
 app.use(express.json());
