@@ -14,21 +14,10 @@ const PORT = process.env.PORT || 8090;
 // Connect to the database
 connectDB();
 
-// CORS configuration
-const allowedOrigins = [
-  'https://mern-mail-hnaz753e0-rijult33s-projects.vercel.app',
-  'https://mern-mail-lligru8r5-rijult33s-projects.vercel.app'
-];
-
+// CORS configuration to allow all origins
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.includes(origin) || !origin) { // Allow requests with no origin (e.g., Postman)
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
+  origin: '*', // Allow all origins
+  credentials: true, // Allow cookies and credentials
   optionsSuccessStatus: 200,
 };
 
