@@ -17,11 +17,23 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+const allowedOrigins = [
+  'https://mern-mail-18niuwwie-rijult33s-projects.vercel.app',
+  'https://mern-mail-lligru8r5-rijult33s-projects.vercel.app'
+];
+
 const corsOptions = {
-  origin: 'https://mern-mail-lligru8r5-rijult33s-projects.vercel.app',
-  credentials: true,  // Allow credentials
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
   optionsSuccessStatus: 200,
 };
+
 
 
 app.use(cors(corsOptions));
