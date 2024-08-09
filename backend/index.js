@@ -18,9 +18,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: ['http://localhost:8090', 'http://localhost:5173' , 'http://localhost:3000','http://192.168.193.160:8082','https://mailapp-qd44.onrender.com','https://mern-mail-lligru8r5-rijult33s-projects.vercel.app'],
-    credentials: true, 
-  };
+  origin: '*', // Allow all origins temporarily for testing
+};
+
 
 app.use(cors(corsOptions));
 
