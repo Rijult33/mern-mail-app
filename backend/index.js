@@ -19,17 +19,20 @@ const corsOptions = {
   origin: '*', // Allow all origins
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-  credentials: true, // Allow credentials (cookies)
+  credentials: true, // Allow cookies and credentials
   optionsSuccessStatus: 200,
 };
 
-// Use CORS middleware
+// Use CORS middleware before other middleware
 app.use(cors(corsOptions));
 
 // Middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// Handle preflight requests
+app.options('*', cors(corsOptions)); // Preflight requests
 
 // Routes
 app.use('/api/v1/user', userRoute);
