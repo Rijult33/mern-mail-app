@@ -6,10 +6,11 @@ const isAuthenticated = async (req, res, next) => {
         console.log("Token:", token);
 
         if (!token) {
+            console.log("there is no token")
             return res.status(401).json({ message: "User not authenticated" });
         }
 
-        // Verify the token
+       
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
         console.log("Decoded:", decoded);
 
