@@ -16,7 +16,7 @@ connectDB();
 
 // CORS configuration to allow all origins
 const corsOptions = {
-  origin: 'https://mern-mail-app-7dv2.onrender.com', // Allow only requests from this origin
+  origin: 'https://mern-mail-app.vercel.app', // Allow only requests from this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
