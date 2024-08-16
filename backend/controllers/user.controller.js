@@ -42,28 +42,34 @@ export const login = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
-
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or password", success: false });
+      return res.status(400).json({ message: "Invalid credentials", success: false });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid email or password", success: false });
+      return res.status(400).json({ message: "Invalid credentials", success: false });
     }
 
-    const tokenData = {
-      userId: user._id
+    const tokenData = { userId: user._id };
+    const token = jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' });
+
+    const cookieOptions = {
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: false
     };
 
-    const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
-      expiresIn: '1d'
-    });
+    if (process.env.SECURE_COOKIES === 'true') {
+      cookieOptions.sameSite = 'none';
+      cookieOptions.secure = true;
+    }
 
     return res.status(200)
-      .cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'strict' })
+      .cookie("token", token, cookieOptions)
       .json({ message: `${user.fullName} logged in successfully`, user, success: true });
+
   } catch (error) {
     console.error("Error in login controller: ", error);
     return res.status(500).json({ message: "Internal Server Error", success: false });
@@ -73,12 +79,28 @@ export const login = async (req, res) => {
 
 
 
+
 export const logout = async (req, res) => {
   try {
-    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
-      message: "Logged out Successfully"
-    });
+    const cookieOptions = {
+      maxAge: 0,
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: false
+    };
+
+    if (process.env.SECURE_COOKIES === 'true') {
+      cookieOptions.sameSite = 'none';
+      cookieOptions.secure = true;
+    }
+
+    return res.status(200)
+      .cookie("token", "", cookieOptions)
+      .json({ message: "Logged out successfully", success: true });
+
   } catch (error) {
-    console.log(error);
+    console.error("Error in logout controller: ", error);
+    return res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
+

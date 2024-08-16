@@ -9,18 +9,28 @@ const isAuthenticated = async (req, res, next) => {
             return res.status(401).json({ message: "User not authenticated" });
         }
 
-        const decode = jwt.verify(token, process.env.SECRET_KEY);
-        console.log("Decoded:", decode);
+        // Verify the token
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        console.log("Decoded:", decoded);
 
-        if (!decode) {
+        if (!decoded) {
             return res.status(401).json({ message: "Invalid token" });
         }
 
-        req.id = decode.userId;
+        // Attach the user ID to the request object
+        req.id = decoded.userId;
         next();
+
     } catch (error) {
         console.error("Error in isAuthenticated middleware:", error);
-        return res.status(500).json({ message: "Internal Server Error" });
+
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ message: "Token expired. Please log in again." });
+        } else if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({ message: "Invalid token. Please log in again." });
+        } else {
+            return res.status(500).json({ message: "Internal Server Error" });
+        }
     }
 };
 
