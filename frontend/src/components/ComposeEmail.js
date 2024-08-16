@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { MdClose, MdZoomOutMap } from 'react-icons/md';
+import API_URL from '../config/config';
 
 const ComposeEmail = ({ setComposeVisible, composeVisible, view, dispatch, fetchSentEmails, fetchAllEmails }) => {
   const [composeData, setComposeData] = useState({ to: '', subject: '', message: '' });
@@ -20,7 +21,7 @@ const ComposeEmail = ({ setComposeVisible, composeVisible, view, dispatch, fetch
 
   const handleComposeSend = async () => {
     try {
-      const response = await axios.post('https://mailapp-qd44.onrender.com/api/v1/email/create', composeData, { withCredentials: true });
+      const response = await axios.post(`${API_URL}api/v1/email/create`, composeData, { withCredentials: true });
       if (response.data.success) {
         toast.success("Email sent successfully.");
         setComposeVisible(false);

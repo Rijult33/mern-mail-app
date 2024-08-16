@@ -16,12 +16,13 @@ connectDB();
 
 // CORS configuration to allow all origins
 const corsOptions = {
-  origin: '*', // Allow all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-  credentials: true, // Allow cookies and credentials
+  origin: 'http://localhost:3000', // Allow only requests from this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
   optionsSuccessStatus: 200,
 };
+
 
 // Use CORS middleware before other middleware
 app.use(cors(corsOptions));

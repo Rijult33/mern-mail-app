@@ -5,6 +5,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { setAuthUser } from '../redux/appSlice';
+import API_URL from '../config/config';
 
 const Signup = () => {
   const navigate = useNavigate(); 
@@ -33,7 +34,7 @@ const Signup = () => {
       console.log('Submitting form data:', formData);
 
       try {
-        const res = await axios.post("https://mailapp-qd44.onrender.com/api/v1/user/register", formData, {
+        const res = await axios.post(`${API_URL}api/v1/user/register`, formData, {
           headers: {
             "Content-Type": "application/json"
           },

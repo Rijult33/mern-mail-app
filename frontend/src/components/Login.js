@@ -31,7 +31,7 @@ const Login = () => {
     console.log(formData);
   
     try {
-      const loginRes = await axios.post("https://mailapp-qd44.onrender.com/api/v1/user/login", formData, {
+      const loginRes = await axios.post("http://localhost:8090/api/v1/user/login", formData, {
         headers: {
           "Content-Type": "application/json"
         },
