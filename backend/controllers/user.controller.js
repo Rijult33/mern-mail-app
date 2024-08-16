@@ -58,7 +58,7 @@ export const login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
       httpOnly: true,
       sameSite: 'strict',
-      secure: false
+      secure: true
     };
 
     if (process.env.SECURE_COOKIES === 'true') {
