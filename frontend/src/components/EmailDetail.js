@@ -11,6 +11,7 @@ import {
 } from '../redux/actions';
 import { IoIosRefresh } from "react-icons/io";
 import { MdDeleteOutline, MdArrowBack, MdReply } from "react-icons/md";
+import API_URL from '../config/config';
 
 const EmailDetail = () => {
   const { id } = useParams();
@@ -24,7 +25,7 @@ const EmailDetail = () => {
   useEffect(() => {
     const fetchMail = async () => {
       try {
-        const response = await axios.get(`http://localhost:8090/api/v1/email/${id}`, { withCredentials: true });
+        const response = await axios.get(`${API_URL}api/v1/email/${id}`, { withCredentials: true });
         setMail(response.data.email);
         setLoading(false);
       } catch (error) {

@@ -5,6 +5,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { setAuthUser, setReceivedEmails } from '../redux/appSlice';
+import API_URL from '../config/config';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const Login = () => {
     console.log(formData);
   
     try {
-      const loginRes = await axios.post("http://localhost:8090/api/v1/user/login", formData, {
+      const loginRes = await axios.post(`${API_URL}api/v1/user/login`, formData, {
         headers: {
           "Content-Type": "application/json"
         },
